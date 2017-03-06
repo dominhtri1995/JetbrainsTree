@@ -26,5 +26,7 @@ public class RemoveSimpleTest {
         jb.add(4);
         jb.remove(2);
         assertEquals(4, jb.get(2));
+        jb.remove(0);
+        assertEquals(2, jb.get(0));
     }
 }
