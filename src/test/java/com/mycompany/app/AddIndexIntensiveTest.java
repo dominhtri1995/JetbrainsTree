@@ -23,5 +23,6 @@ public class AddIndexIntensiveTest {
         for (int i = 1; i <= 10000; i++) {
             assertEquals(i, jb.get(i));
         }
+        assertEquals(0.5, jb.get(10001));
     }
 }
