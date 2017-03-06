@@ -1,9 +1,11 @@
 /*Jetbrains- DataStructure.
  * Avltree with index
- * Performance on all operation is O(logN) except for reIndex O(logN) which only after 1000 times insert into spefic index
+ * Performance on all operation is O(logN) except for reIndex O(logN) which only runs after 99000 times insert into spefic index
  * Enjoy!
  */
 package com.mycompany.app;
+
+import jdk.nashorn.internal.parser.TokenType;
 
 public class AvlTree<AnyType> {
 
@@ -12,7 +14,7 @@ public class AvlTree<AnyType> {
      */
     private AvlNode<AnyType> root;
     private int countInsertIndex = 0;
-
+    private int size=0;
     public AvlTree() {
         root = null;
     }
@@ -24,29 +26,26 @@ public class AvlTree<AnyType> {
                 return -1;
             }
         }
-        if (root != null && (index > root.leftSubTreeNum + numRightSubTree(root.right) + 2 || index < 0)) {
-            return -1;
-        }
         // Insert
-
+        size++;
         root = insertBack(index, x, root);
         return 1;
     }
 
     public int insert(double index, AnyType x) {
         //Check index out of bound
-        if (countInsertIndex == 1000) {
+        if(index >= size ||index <0){
+            throw new IndexOutOfBoundsException();
+        }
+        if (root == null) {
+                throw new IndexOutOfBoundsException();
+        }
+        
+        if (countInsertIndex == 99000) {
             countInsertIndex = 0;
             reIndex(root);
         }
-        if (root == null) {
-            if (index != 0) {
-                return -1;
-            }
-        }
-        if (root != null && (index > root.leftSubTreeNum + numRightSubTree(root.right) + 2 || index < 0)) {
-            return -1;
-        }
+        
         // Insert in between 2 nodes or before node 0
         AvlNode<AnyType> curr = new AvlNode<AnyType>();
         AvlNode<AnyType> prev = new AvlNode<AnyType>();
@@ -54,9 +53,11 @@ public class AvlTree<AnyType> {
             countInsertIndex++;
             prev = find(index - 1, root);
             curr = find(index, root);
-            root = insert((curr.index + prev.index) / 2, x, root);
-        } else {
+            size++;
+            root = insert(getNewPosition(curr.index,prev.index), x, root);
+        } else if(index==0){
             curr = find(0, root);
+            size++;
             root = insert(curr.index - 1, x, root);
         }
 
@@ -64,27 +65,25 @@ public class AvlTree<AnyType> {
     }
 
     public int remove(double index) {
-        if (root == null) {
-            return -1;
+        if(index >= size || index <0){
+            throw new IndexOutOfBoundsException();
         }
-        if (root != null && (index > root.leftSubTreeNum + numRightSubTree(root.right) || index < 0)) {
-            return -1;
+        if (root == null) {
+            throw new IndexOutOfBoundsException();
         }
 
         root = remove(index, root);
-
+        size--;
         return 1;
     }
 
     public AnyType findAndReplace(double index, AnyType newValue) {
+        if(index >= size || index <0){
+            throw new IndexOutOfBoundsException();
+        }
         //Check index out of bound
         if (root == null) {
-            if (index != 0) {
-                return null;
-            }
-        }
-        if (root != null && (index > root.leftSubTreeNum + numRightSubTree(root.right) || index < 0)) {
-            return null;
+                throw new IndexOutOfBoundsException();
         }
 
         return findAndReplace(index, newValue, root);
@@ -92,6 +91,7 @@ public class AvlTree<AnyType> {
 
     public void makeEmpty() {
         root = null;
+        size=0;
     }
 
     public boolean isEmpty() {
@@ -107,11 +107,11 @@ public class AvlTree<AnyType> {
     }
 
     public AnyType get(int index) {
-        if (root == null) {
-            return null;
+        if(index >= size || index <0){
+            throw new IndexOutOfBoundsException();
         }
-        if (root != null && (index > root.leftSubTreeNum + numRightSubTree(root.right) || index < 0)) {
-            return null;
+        if (root == null) {
+            throw new IndexOutOfBoundsException();
         }
 
         return find(index, root).element;
@@ -233,7 +233,7 @@ public class AvlTree<AnyType> {
     //reindex the tree - only run after 1000 times of insert to specific index
     public void reIndex(AvlNode<AnyType> t) {
         if (t != null) {
-            t.index *= Math.pow(10, 301);
+            t.index *= 10000;
             reIndex(t.left);
             reIndex(t.right);
         }
@@ -247,7 +247,15 @@ public class AvlTree<AnyType> {
 
         }
     }
-
+    private double getNewPosition(double end ,double begin){
+        if(end - 0.00001 >begin){
+            return end -0.00001;
+        }else if(end - 0.000001 > begin){
+            return end - 0.000001;
+        }else 
+            return (end+begin)/2;
+       
+    }
     /**
      * Return the height of node t, or -1, if null.
      */

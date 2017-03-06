@@ -31,43 +31,34 @@ public class JBStruct<AnyType> implements java.util.List {
 
     @Override
     public void add(int index, Object element) {
-        int result = tree.insert(index, (AnyType) element);
-        if (result == -1) {
-            throw new IndexOutOfBoundsException("Index out of bound. Please check the index");
-        }
+
+        tree.insert(index, (AnyType) element);
         size++;
 
     }
 
     @Override
     public Object get(int index) {
+
         Object result = tree.get(index);
-        if (result == null) {
-            throw new IndexOutOfBoundsException("Index out of bound. Please check the index");
-        }
+
         return result;
     }
 
     @Override
     public Object set(int index, Object element) {
 
-        Object result = tree.findAndReplace(index, (AnyType) element);
-        if (result != null) {
-            return element;
-        } else {
-            throw new IndexOutOfBoundsException("Index out of bound. Please check the index");
-        }
+        tree.findAndReplace(index, (AnyType) element);
+        return element;
+
     }
 
     @Override
     public Object remove(int index) {
-        int result = tree.remove(index);
-        if (result == -1) {
-            throw new IndexOutOfBoundsException("Index out of bound. Please check the index");
-        } else {
-            size--;
-            return index;
-        }
+
+        tree.remove(index);
+        size--;
+        return index;
     }
 
     // No need to implement ///////////////////////////
