@@ -28,6 +28,21 @@ public class AddIndexIntensiveTest {
         }
         assertEquals(0.5, jb.get(10001));
     }
+    @Test
+    public void test1() {
+        JBStruct jb = new JBStruct();
+        jb.add(0);
+
+        //intensive add to the back
+        for (int i = 1; i <= 10000; i++) {
+            jb.add(i);
+        }
+        
+        for (int i = 1; i <= 10000; i++) {
+            assertEquals(i, jb.get(i));
+        }
+        assertEquals(0.5, jb.get(10001));
+    }
 
     @Test
     public void test2() {
@@ -60,7 +75,6 @@ public class AddIndexIntensiveTest {
         for (int i = 0; i < 10000; i++) {
             assertEquals(i+1, jb.get(i));
         }
-        
         assertEquals(0.5, jb.get(10001));
     }
 }

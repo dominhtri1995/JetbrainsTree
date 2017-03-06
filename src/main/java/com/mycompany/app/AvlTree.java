@@ -47,7 +47,7 @@ public class AvlTree<AnyType> {
         if (root != null && (index > root.leftSubTreeNum + numRightSubTree(root.right) + 2 || index < 0)) {
             return -1;
         }
-        // Insert
+        // Insert in between 2 nodes or before node 0
         AvlNode<AnyType> curr = new AvlNode<AnyType>();
         AvlNode<AnyType> prev = new AvlNode<AnyType>();
         if (index > 0) {
@@ -120,9 +120,7 @@ public class AvlTree<AnyType> {
     private static final int ALLOWED_IMBALANCE = 1;
 
     // Assume t is either balanced or within one of being balanced
-    /**
-     * Internal method to insert into a subtree.
-     */
+    
     private AvlNode<AnyType> find(double index, AvlNode<AnyType> t) {
         if (t == null) {
             return null;
@@ -138,7 +136,6 @@ public class AvlTree<AnyType> {
 
     private AvlNode<AnyType> insertBack(double index, AnyType x, AvlNode<AnyType> t) {
         if (t == null) {
-            System.out.println("New root :" + index + " " + x);
             return new AvlNode<AnyType>(index, x, null, null);
         }
 
@@ -156,7 +153,6 @@ public class AvlTree<AnyType> {
 
     private AvlNode<AnyType> insert(double index, AnyType x, AvlNode<AnyType> t) {
         if (t == null) {
-            System.out.println("New root :" + index + " " + x);
             return new AvlNode<AnyType>(index, x, null, null);
         }
 
@@ -173,13 +169,14 @@ public class AvlTree<AnyType> {
     }
 
     /**
-     * Internal method to remove from a subtree.
+     * find the "index"th smallest node by index (use leftSubTreeNum)
      */
     private AvlNode<AnyType> remove(double index, AvlNode<AnyType> t) {
         if (t == null) {
             return t;   // Item not found; do nothing
         }
-
+        
+        //Go left because the index is still smaller
         if (index < t.leftSubTreeNum) {
             t.leftSubTreeNum--;
             t.left = remove(index, t.left);
@@ -188,12 +185,10 @@ public class AvlTree<AnyType> {
         } else if (t.left != null && t.right != null) // Two children
         {
             AvlNode<AnyType> min = findMinForRemove(t.right);
-//            System.out.println("2 child");
             t.index = min.index;
             t.element = min.element;
             t.right = remove(0, t.right);
         } else {
-//            System.out.println("1 ben null or 0");
             t = (t.left != null) ? t.left : t.right;
         }
 
@@ -255,14 +250,6 @@ public class AvlTree<AnyType> {
      */
     private int height(AvlNode<AnyType> t) {
         return t == null ? -1 : t.height;
-    }
-
-    private double getNewPosition(double end, double begin) {
-        double d = 0.1;
-        while (end - d <= begin) {
-            d = d / 10;
-        }
-        return end - d;
     }
 
     //Return the number of node in the right subtree

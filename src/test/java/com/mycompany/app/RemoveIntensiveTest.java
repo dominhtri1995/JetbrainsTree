@@ -25,5 +25,6 @@ public class RemoveIntensiveTest {
             assertEquals(i,jb.get(1));
             jb.remove(1);
         }
+        assertEquals(0.5, jb.get(1));
     }
 }
