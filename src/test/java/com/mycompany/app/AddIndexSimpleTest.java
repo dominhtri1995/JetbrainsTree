@@ -23,5 +23,17 @@ public class AddIndexSimpleTest {
         assertEquals(7, jb.get(1));
         assertEquals(6, jb.get(3));
     }
-
+    @Test
+    public void test2(){
+        JBStruct jb = new JBStruct();
+        jb.add(5);
+        jb.add(6);
+        jb.add(7);
+        jb.add(1, 8);
+        jb.add(1,9);
+        jb.add(1,10);
+        jb.add(2,11);
+        jb.add(3,12);
+//        assertEquals(7, jb.get(1));
+    }
 }

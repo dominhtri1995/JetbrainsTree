@@ -22,4 +22,5 @@ public class SetSimpleTest {
         jb.set(1, 7);
         assertEquals(7, jb.get(1));
     }
+    
 }
