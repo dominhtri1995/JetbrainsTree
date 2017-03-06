@@ -31,9 +31,17 @@ public class AddIndexSimpleTest {
         jb.add(7);
         jb.add(1, 8);
         jb.add(1,9);
+        assertEquals(9, jb.get(1));
+        assertEquals(8, jb.get(2));
+        
         jb.add(1,10);
         jb.add(2,11);
         jb.add(3,12);
-//        assertEquals(7, jb.get(1));
+        assertEquals(5, jb.get(0));
+        assertEquals(10, jb.get(1));
+        assertEquals(11, jb.get(2));
+        assertEquals(12, jb.get(3));
+        assertEquals(9, jb.get(4));
+        
     }
 }

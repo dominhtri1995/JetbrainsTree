@@ -35,11 +35,10 @@ public class AvlTree<AnyType> {
 
     public int insert(double index, AnyType x) {
         //Check index out of bound
-        if(countInsertIndex ==1000){
-            countInsertIndex =0;
+        if (countInsertIndex == 1000) {
+            countInsertIndex = 0;
             reIndex(root);
         }
-        countInsertIndex++;
         if (root == null) {
             if (index != 0) {
                 return -1;
@@ -52,12 +51,13 @@ public class AvlTree<AnyType> {
         AvlNode<AnyType> curr = new AvlNode<AnyType>();
         AvlNode<AnyType> prev = new AvlNode<AnyType>();
         if (index > 0) {
+            countInsertIndex++;
             prev = find(index - 1, root);
             curr = find(index, root);
             root = insert((curr.index + prev.index) / 2, x, root);
         } else {
             curr = find(0, root);
-            root = insert(index - 1, x, root);
+            root = insert(curr.index - 1, x, root);
         }
 
         return 1;
@@ -97,7 +97,7 @@ public class AvlTree<AnyType> {
     public boolean isEmpty() {
         return root == null;
     }
-    
+
     public void printTree() {
         if (isEmpty()) {
             System.out.println("Empty tree");
@@ -232,13 +232,15 @@ public class AvlTree<AnyType> {
             return findAndReplace(index - t.leftSubTreeNum - 1, newValue, t.right);
         }
     }
-    public void reIndex(AvlNode<AnyType> t){
-        if(t!= null){
-            t.index *= Math.pow(10,301);
+
+    public void reIndex(AvlNode<AnyType> t) {
+        if (t != null) {
+            t.index *= Math.pow(10, 301);
             reIndex(t.left);
             reIndex(t.right);
         }
     }
+
     private void printTree(AvlNode<AnyType> t) {
         if (t != null) {
             printTree(t.left);
