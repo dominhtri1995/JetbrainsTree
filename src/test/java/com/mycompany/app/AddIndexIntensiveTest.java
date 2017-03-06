@@ -7,9 +7,9 @@ import static org.junit.Assert.*;
  *
  * @author TriDo
  */
-public class SetIndexIntensiveTest {
+public class AddIndexIntensiveTest {
 
-    public SetIndexIntensiveTest() {
+    public AddIndexIntensiveTest() {
     }
 
     @Test
