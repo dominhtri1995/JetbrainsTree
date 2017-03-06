@@ -1,7 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/*Jetbrains- DataStructure.
+ * Avltree with index
+ * Performance on all operation is O(logN) except for reIndex O(logN) which only after 1000 times insert into spefic index
+ * Enjoy!
  */
 package com.mycompany.app;
 
@@ -155,7 +155,9 @@ public class AvlTree<AnyType> {
         if (t == null) {
             return new AvlNode<AnyType>(index, x, null, null);
         }
-
+        /**
+        * find the "index"th smallest node by index (use leftSubTreeNum)
+        */
         if (index < t.index) {
             t.leftSubTreeNum++;
             t.left = insert(index, x, t.left);
@@ -227,7 +229,8 @@ public class AvlTree<AnyType> {
             return findAndReplace(index - t.leftSubTreeNum - 1, newValue, t.right);
         }
     }
-
+    
+    //reindex the tree - only run after 1000 times of insert to specific index
     public void reIndex(AvlNode<AnyType> t) {
         if (t != null) {
             t.index *= Math.pow(10, 301);
