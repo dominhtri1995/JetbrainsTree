@@ -28,7 +28,7 @@ public class AvlTree<AnyType> {
         }
         // Insert
 
-        root = insert(index, x, root);
+        root = insertBack(index, x, root);
         return 1;
     }
 
@@ -43,9 +43,13 @@ public class AvlTree<AnyType> {
             return -1;
         }
         // Insert
-        AvlNode<AnyType> curr = find(index, root);
-        curr.index+=0.0001;
-        root = insert(curr.index - 0.0001, x, root);
+        AvlNode<AnyType> curr = new AvlNode<AnyType>();
+        if(index >0)
+            curr = find(index-1, root);
+        else 
+            curr = find(index, root);
+        curr.index-=0.0001;
+        root = insert(curr.index + 0.0001, x, root);
         return 1;
     }
 
@@ -122,7 +126,7 @@ public class AvlTree<AnyType> {
         }
     }
 
-    private AvlNode<AnyType> insert(double index, AnyType x, AvlNode<AnyType> t) {
+    private AvlNode<AnyType> insertBack(double index, AnyType x, AvlNode<AnyType> t) {
         if (t == null) {
             System.out.println("New root :" + index + " " + x);
             return new AvlNode<AnyType>(index, x, null, null);
@@ -146,7 +150,25 @@ public class AvlTree<AnyType> {
         }
         return balance(t);
     }
+    
+    private AvlNode<AnyType> insert(double index, AnyType x, AvlNode<AnyType> t) {
+        if (t == null) {
+            System.out.println("New root :" + index + " " + x);
+            return new AvlNode<AnyType>(index, x, null, null);
+        }
 
+        if (index < t.index) {
+            t.leftSubTreeNum++;
+            t.left = insert(index, x, t.left);
+        } else if (index > t.index) {
+            t.right = insert(index, x, t.right);
+        } else //Duplicate
+        {
+            t.leftSubTreeNum++;
+            t.left = insert(index - 0.0001, x, t.left);
+        }
+        return balance(t);
+    }
     /**
      * Internal method to remove from a subtree.
      */
@@ -333,6 +355,9 @@ public class AvlTree<AnyType> {
 
     private static class AvlNode<AnyType> {
         // Constructors
+        
+        public AvlNode() {
+        }
 
         AvlNode(AnyType theElement) {
             this(0, theElement, null, null);
