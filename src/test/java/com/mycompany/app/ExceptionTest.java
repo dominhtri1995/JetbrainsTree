@@ -29,6 +29,12 @@ public class ExceptionTest {
         jb.add(1);
         jb.remove(2);
     }
+    
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void emptySet_removeOutBoundIndex_raiseException() {
+        JBStruct jb = new JBStruct();
+        jb.remove(0);
+    }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void struct_setOutBoundIndex_raiseException() {

@@ -14,10 +14,6 @@ public class JBStruct<AnyType> implements java.util.List {
     AvlTree<AnyType> tree = new AvlTree<AnyType>();
     int size = 0;
 
-    public void printTree() {
-        tree.printTree();
-    }
-
     @Override
     public boolean add(Object e) {
         tree.insertBack(size, (AnyType) e);

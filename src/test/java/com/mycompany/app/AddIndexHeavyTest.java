@@ -15,10 +15,10 @@ public class AddIndexHeavyTest {
         jb.add(0.5);
         jb.add(1);
         //intensive add to 1 position to see how the tree handle and reindex
-        for (int i = 10000; i >= 2; i--) {
+        for (int i = 100000; i >= 2; i--) {
             jb.add(2, i);
         }
-        for (int i = 2; i <= 10000; i++) {
+        for (int i = 2; i <= 100000; i++) {
             assertEquals(i, jb.get(i));
         }
     }

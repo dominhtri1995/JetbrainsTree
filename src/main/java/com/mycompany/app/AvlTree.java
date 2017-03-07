@@ -69,7 +69,6 @@ public class AvlTree<AnyType> {
         if (root == null) {
             throw new IndexOutOfBoundsException();
         }
-
         root = remove(index, root);
         size--;
         return 1;
@@ -83,25 +82,7 @@ public class AvlTree<AnyType> {
         if (root == null) {
             throw new IndexOutOfBoundsException();
         }
-
         return findAndReplace(index, newValue, root);
-    }
-
-    public void makeEmpty() {
-        root = null;
-        size = 0;
-    }
-
-    public boolean isEmpty() {
-        return root == null;
-    }
-
-    public void printTree() {
-        if (isEmpty()) {
-            System.out.println("Empty tree");
-        } else {
-            printTree(root);
-        }
     }
 
     public AnyType get(int index) {
@@ -198,16 +179,6 @@ public class AvlTree<AnyType> {
         }
         while (t.left != null) {
             t = t.left;
-        }
-        return t;
-    }
-
-    private AvlNode<AnyType> findMax(AvlNode<AnyType> t) {
-        if (t == null) {
-            return t;
-        }
-        while (t.right != null) {
-            t = t.right;
         }
         return t;
     }
@@ -321,27 +292,6 @@ public class AvlTree<AnyType> {
 
         t.height = Math.max(height(t.left), height(t.right)) + 1;
         return t;
-    }
-
-    public void checkBalance() {
-        checkBalance(root);
-    }
-
-    private int checkBalance(AvlNode<AnyType> t) {
-        if (t == null) {
-            return -1;
-        }
-
-        if (t != null) {
-            int hl = checkBalance(t.left);
-            int hr = checkBalance(t.right);
-            if (Math.abs(height(t.left) - height(t.right)) > 1
-                    || height(t.left) != hl || height(t.right) != hr) {
-                System.out.println("OOPS!!");
-            }
-        }
-
-        return height(t);
     }
 
     private static class AvlNode<AnyType> {
