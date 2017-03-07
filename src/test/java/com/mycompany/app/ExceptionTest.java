@@ -1,47 +1,45 @@
-
 package com.mycompany.app;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author TriDo
- */
 public class ExceptionTest {
-    
+
     public ExceptionTest() {
     }
-    
+
     @Test(expected = IndexOutOfBoundsException.class)
-    public void Addtest() {
+    public void struct_addOutBoundIndex_raiseException() {
         JBStruct jb = new JBStruct();
         jb.add(5);
-        jb.add(1,2);
+        jb.add(1, 2);
     }
+
     @Test(expected = IndexOutOfBoundsException.class)
-    public void Addtest2() {
+    public void negative_addOutBoundIndex_raiseException() {
         JBStruct jb = new JBStruct();
         jb.add(5);
-        jb.add(-1,2);
+        jb.add(-1, 2);
     }
-    
+
     @Test(expected = IndexOutOfBoundsException.class)
-    public void Removetest() {
+    public void struct_removeOutBoundIndex_raiseException() {
         JBStruct jb = new JBStruct();
         jb.add(5);
         jb.add(1);
         jb.remove(2);
     }
+
     @Test(expected = IndexOutOfBoundsException.class)
-    public void Settest() {
+    public void struct_setOutBoundIndex_raiseException() {
         JBStruct jb = new JBStruct();
         jb.add(5);
         jb.add(1);
-        jb.set(2,3);
+        jb.set(2, 3);
     }
+
     @Test(expected = IndexOutOfBoundsException.class)
-    public void Gettest() {
+    public void struct_getOutBoundIndex_raiseException() {
         JBStruct jb = new JBStruct();
         jb.add(5);
         jb.add(1);

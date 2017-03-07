@@ -3,31 +3,28 @@ package com.mycompany.app;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author TriDo
- */
-public class AddIndexIntensiveTest {
-    
-    public AddIndexIntensiveTest() {
+public class AddIndexHeavyTest {
+
+    public AddIndexHeavyTest() {
     }
-    
+
     @Test
     public void test() {
         JBStruct jb = new JBStruct();
         jb.add(0);
         jb.add(0.5);
+        jb.add(1);
         //intensive add to 1 position to see how the tree handle and reindex
-        for (int i = 100000; i >= 1; i--) {
-            jb.add(1, i);
+        for (int i = 10000; i >= 2; i--) {
+            jb.add(2, i);
         }
-        for (int i = 1; i <= 100000; i++) {
+        for (int i = 2; i <= 10000; i++) {
             assertEquals(i, jb.get(i));
         }
-        assertEquals(0.5, jb.get(100001));
     }
+
     @Test
-    public void test1() {
+    public void addbacktest() {
         JBStruct jb = new JBStruct();
         jb.add(0);
 
@@ -35,11 +32,10 @@ public class AddIndexIntensiveTest {
         for (int i = 1; i <= 10000; i++) {
             jb.add(i);
         }
-        
+
         for (int i = 1; i <= 10000; i++) {
             assertEquals(i, jb.get(i));
         }
-        assertEquals(0.5, jb.get(10001));
     }
 
     @Test
@@ -71,7 +67,7 @@ public class AddIndexIntensiveTest {
         }
 
         for (int i = 0; i < 10000; i++) {
-            assertEquals(i+1, jb.get(i));
+            assertEquals(i + 1, jb.get(i));
         }
         assertEquals(0.5, jb.get(10001));
     }

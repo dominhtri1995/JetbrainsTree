@@ -1,9 +1,5 @@
 package com.mycompany.app;
 
-/**
- * Hello world!
- *
- */
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -31,7 +27,6 @@ public class JBStruct<AnyType> implements java.util.List {
 
     @Override
     public void add(int index, Object element) {
-
         tree.insert(index, (AnyType) element);
         size++;
 
@@ -39,23 +34,18 @@ public class JBStruct<AnyType> implements java.util.List {
 
     @Override
     public Object get(int index) {
-
         Object result = tree.get(index);
-
         return result;
     }
 
     @Override
     public Object set(int index, Object element) {
-
         tree.findAndReplace(index, (AnyType) element);
         return element;
-
     }
 
     @Override
     public Object remove(int index) {
-
         tree.remove(index);
         size--;
         return index;

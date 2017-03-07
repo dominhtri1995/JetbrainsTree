@@ -9,12 +9,10 @@ import jdk.nashorn.internal.parser.TokenType;
 
 public class AvlTree<AnyType> {
 
-    /**
-     * The tree root.
-     */
     private AvlNode<AnyType> root;
     private int countInsertIndex = 0;
-    private int size=0;
+    private int size = 0;
+
     public AvlTree() {
         root = null;
     }
@@ -34,18 +32,18 @@ public class AvlTree<AnyType> {
 
     public int insert(double index, AnyType x) {
         //Check index out of bound
-        if(index >= size ||index <0){
+        if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException();
         }
         if (root == null) {
-                throw new IndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException();
         }
-        
+
         if (countInsertIndex == 99000) {
             countInsertIndex = 0;
             reIndex(root);
         }
-        
+
         // Insert in between 2 nodes or before node 0
         AvlNode<AnyType> curr = new AvlNode<AnyType>();
         AvlNode<AnyType> prev = new AvlNode<AnyType>();
@@ -54,8 +52,8 @@ public class AvlTree<AnyType> {
             prev = find(index - 1, root);
             curr = find(index, root);
             size++;
-            root = insert(getNewPosition(curr.index,prev.index), x, root);
-        } else if(index==0){
+            root = insert(getNewPosition(curr.index, prev.index), x, root);
+        } else if (index == 0) {
             curr = find(0, root);
             size++;
             root = insert(curr.index - 1, x, root);
@@ -65,7 +63,7 @@ public class AvlTree<AnyType> {
     }
 
     public int remove(double index) {
-        if(index >= size || index <0){
+        if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException();
         }
         if (root == null) {
@@ -78,12 +76,12 @@ public class AvlTree<AnyType> {
     }
 
     public AnyType findAndReplace(double index, AnyType newValue) {
-        if(index >= size || index <0){
+        if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException();
         }
         //Check index out of bound
         if (root == null) {
-                throw new IndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException();
         }
 
         return findAndReplace(index, newValue, root);
@@ -91,7 +89,7 @@ public class AvlTree<AnyType> {
 
     public void makeEmpty() {
         root = null;
-        size=0;
+        size = 0;
     }
 
     public boolean isEmpty() {
@@ -107,7 +105,7 @@ public class AvlTree<AnyType> {
     }
 
     public AnyType get(int index) {
-        if(index >= size || index <0){
+        if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException();
         }
         if (root == null) {
@@ -117,10 +115,9 @@ public class AvlTree<AnyType> {
         return find(index, root).element;
     }
 
+    /* Internal method */
     private static final int ALLOWED_IMBALANCE = 1;
 
-    // Assume t is either balanced or within one of being balanced
-    
     private AvlNode<AnyType> find(double index, AvlNode<AnyType> t) {
         if (t == null) {
             return null;
@@ -156,8 +153,8 @@ public class AvlTree<AnyType> {
             return new AvlNode<AnyType>(index, x, null, null);
         }
         /**
-        * find the "index"th smallest node by index (use leftSubTreeNum)
-        */
+         * find the "index"th smallest node by index (use leftSubTreeNum)
+         */
         if (index < t.index) {
             t.leftSubTreeNum++;
             t.left = insert(index, x, t.left);
@@ -175,10 +172,8 @@ public class AvlTree<AnyType> {
      */
     private AvlNode<AnyType> remove(double index, AvlNode<AnyType> t) {
         if (t == null) {
-            return t;   // Item not found; do nothing
+            return t;
         }
-        
-        //Go left because the index is still smaller
         if (index < t.leftSubTreeNum) {
             t.leftSubTreeNum--;
             t.left = remove(index, t.left);
@@ -201,7 +196,6 @@ public class AvlTree<AnyType> {
         if (t == null) {
             return t;
         }
-
         while (t.left != null) {
             t = t.left;
         }
@@ -212,7 +206,6 @@ public class AvlTree<AnyType> {
         if (t == null) {
             return t;
         }
-
         while (t.right != null) {
             t = t.right;
         }
@@ -229,8 +222,7 @@ public class AvlTree<AnyType> {
             return findAndReplace(index - t.leftSubTreeNum - 1, newValue, t.right);
         }
     }
-    
-    //reindex the tree - only run after 1000 times of insert to specific index
+
     public void reIndex(AvlNode<AnyType> t) {
         if (t != null) {
             t.index *= 10000;
@@ -247,18 +239,18 @@ public class AvlTree<AnyType> {
 
         }
     }
-    private double getNewPosition(double end ,double begin){
-        if(end - 0.00001 >begin){
-            return end -0.00001;
-        }else if(end - 0.000001 > begin){
+
+    private double getNewPosition(double end, double begin) {
+        if (end - 0.00001 > begin) {
+            return end - 0.00001;
+        } else if (end - 0.000001 > begin) {
             return end - 0.000001;
-        }else 
-            return (end+begin)/2;
-       
+        } else {
+            return (end + begin) / 2;
+        }
+
     }
-    /**
-     * Return the height of node t, or -1, if null.
-     */
+
     private int height(AvlNode<AnyType> t) {
         return t == null ? -1 : t.height;
     }
@@ -276,10 +268,6 @@ public class AvlTree<AnyType> {
         return sum;
     }
 
-    /**
-     * Rotate binary tree node with left child. For AVL trees, this is a single
-     * rotation for case 1. Update heights, then return new root.
-     */
     private AvlNode<AnyType> rotateWithLeftChild(AvlNode<AnyType> k2) {
         AvlNode<AnyType> k1 = k2.left;
         int numRight = numRightSubTree(k1.right);
@@ -292,10 +280,6 @@ public class AvlTree<AnyType> {
         return k1;
     }
 
-    /**
-     * Rotate binary tree node with right child. For AVL trees, this is a single
-     * rotation for case 4. Update heights, then return new root.
-     */
     private AvlNode<AnyType> rotateWithRightChild(AvlNode<AnyType> k1) {
         AvlNode<AnyType> k2 = k1.right;
         k1.right = k2.left;
@@ -306,21 +290,11 @@ public class AvlTree<AnyType> {
         return k2;
     }
 
-    /**
-     * Double rotate binary tree node: first left child with its right child;
-     * then node k3 with new left child. For AVL trees, this is a double
-     * rotation for case 2. Update heights, then return new root.
-     */
     private AvlNode<AnyType> doubleWithLeftChild(AvlNode<AnyType> k3) {
         k3.left = rotateWithRightChild(k3.left);
         return rotateWithLeftChild(k3);
     }
 
-    /**
-     * Double rotate binary tree node: first right child with its left child;
-     * then node k1 with new right child. For AVL trees, this is a double
-     * rotation for case 3. Update heights, then return new root.
-     */
     private AvlNode<AnyType> doubleWithRightChild(AvlNode<AnyType> k1) {
         k1.right = rotateWithLeftChild(k1.right);
         return rotateWithRightChild(k1);
@@ -371,7 +345,6 @@ public class AvlTree<AnyType> {
     }
 
     private static class AvlNode<AnyType> {
-        // Constructors
 
         public AvlNode() {
         }
@@ -389,12 +362,12 @@ public class AvlTree<AnyType> {
             leftSubTreeNum = 0;
         }
 
-        AnyType element; // The data in the node
-        double index;    //index 
-        int leftSubTreeNum;  // number of node in its left subtree
-        AvlNode<AnyType> left;         // Left child
-        AvlNode<AnyType> right;        // Right child
-        int height;       // Height
+        AnyType element;
+        double index;
+        int leftSubTreeNum;
+        AvlNode<AnyType> left;
+        AvlNode<AnyType> right;
+        int height;
     }
 
 }
