@@ -18,12 +18,13 @@ public class AddIndexIntensiveTest {
         jb.add(0);
         jb.add(0.5);
         //intensive add to 1 position to see how the tree handle and reindex
-        for (int i = 300000; i >= 1; i--) {
+        for (int i = 100000; i >= 1; i--) {
             jb.add(1, i);
         }
-        for (int i = 1; i <= 300000; i++) {
+        for (int i = 1; i <= 100000; i++) {
             assertEquals(i, jb.get(i));
         }
+        assertEquals(0.5, jb.get(100001));
     }
     @Test
     public void test1() {
