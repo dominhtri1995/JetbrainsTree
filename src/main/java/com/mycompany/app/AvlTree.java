@@ -1,6 +1,6 @@
 /*Jetbrains- DataStructure.
  * Avltree with index
- * Performance on all operation is O(logN) except for reIndex O(logN) which only runs after 99000 times insert into spefic index
+ * Performance on all operation is O(logN) except for reIndex O(N) which only runs after 99000 times insert into spefic index
  * Enjoy!
  */
 package com.mycompany.app;
